@@ -1,0 +1,53 @@
+- restConfiguration:
+    component: platform-http
+    scheme: http
+    host: 127.0.0.1
+    port: '8080'
+    bindingMode: 'off'
+    enableCors: true
+    contextPath: poc
+- rest:
+    id: rest-ab14
+    post:
+      - id: post-fa88
+        path: message2rabbit
+        to: direct:sendmessage
+        consumes: application/json
+        produces: application/json
+        bindingMode: 'off'
+        enableCors: true
+    consumes: application/json
+    produces: application/json
+    bindingMode: 'off'
+    enableCors: true
+- route:
+    id: sendmessage
+    from:
+      uri: direct
+      id: from-f356
+      parameters:
+        name: sendmessage
+      steps:
+        - to:
+            uri: log
+            id: to-4bd5
+            parameters:
+              loggerName: logging
+              showBody: true
+        - to:
+            uri: spring-rabbitmq
+            id: to-717b
+            parameters:
+              exchangeName: some_exchange
+              connectionFactory: '#bean:RabbitMQConnectionFactory'
+              testConnectionOnStartup: false
+              disableReplyTo: true
+              routingKey: test_queue_key
+- beans:
+    - name: RabbitMQConnectionFactory
+      properties:
+        host: hello-world.rabbitmq-system.svc
+        port: '5672'
+        username: {USERNAME}
+        password: {PASSWORD}
+      type: org.springframework.amqp.rabbit.connection.CachingConnectionFactory
