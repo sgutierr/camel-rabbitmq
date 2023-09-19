@@ -5,7 +5,7 @@ This is a step by step guide about how to create a Camel integration straightfor
 ## PreRequisites
 - Visual Studio Code with Camel and Karavan plugins
 - RabbitMQ 
-- JBang 
+- JBang: https://www.jbang.dev/download/
 - Add this image base in your OpenShift cluster to build the integration service: registry.access.redhat.com/ubi8/openjdk-11:1.10
 
 ## Preparing RabbitMQ 
