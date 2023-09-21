@@ -38,16 +38,20 @@
             uri: spring-rabbitmq
             id: to-717b
             parameters:
-              exchangeName: some_exchange
+              exchangeName: '{{properties.exchange:default}}'
               connectionFactory: '#bean:RabbitMQConnectionFactory'
               testConnectionOnStartup: false
               disableReplyTo: true
               routingKey: test_queue_key
+        - log:
+            message: '{{properties.exchange:default}}'
+            id: log-14d7
+            logName: configmap
 - beans:
     - name: RabbitMQConnectionFactory
       properties:
-        host: hello-world.rabbitmq-system.svc
+        host: '{{rabbitmq.host}}'
         port: '5672'
-        username: {USERNAME}
-        password: {PASSWORD}
+        username: '{{rabbitmq.username}}'
+        password: '{{rabbitmq.password}}'
       type: org.springframework.amqp.rabbit.connection.CachingConnectionFactory

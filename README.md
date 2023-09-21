@@ -1,6 +1,7 @@
 # REST API to RabbitMQusing Camel
 
 This is a step by step guide about how to create a Camel integration straightfordward which sends the body payload recieved in REST API endpoint to a RabbitMQ exchange.
+![](docs/diagramrest2rabbit.png)
 
 ## PreRequisites
 - Visual Studio Code with Camel and Karavan plugins
