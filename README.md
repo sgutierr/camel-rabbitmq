@@ -25,13 +25,21 @@ rabbitmqadmin --vhost="/" declare binding source="some_exchange" destination_typ
 ```
 # How to build 
 1. Clone this project.
-2. Open application.properties file and replace the {namespace} varaible by your namespace.
-3. Open rest2rabbit.camel.yaml set up in the "beans" section your correct rabbitmq parameters: host,port,username and password .
-3. Sign in your OpenShift cluster, this command will deploy the integration route in it:
+2. Open application.properties file and replace the {namespace} varaible by your namespace and set the properties rabbitmq.host, rabbitmq.username and rabbitmq.password.
+3. Create ConfigMap with the exchange name:
+   ```
+   apiVersion: v1
+   kind: ConfigMap
+   metadata:
+     name: camel-configuration
+     namespace: appdev-integration
+   data:
+     properties.exchange: some_exchange
+   ``` 
+4. Sign in your OpenShift cluster, this command will deploy the integration route in it:
    ```
    jbang -Dcamel.jbang.version=3.21.0 camel@apache/camel export --fresh  --directory={PROJECT_PATH}/.export && mvn clean package -f .export
    ```
-
     
 # Steps to create this demo from scratch.
  - VSCode -> run "Karavan: Create integration" on Command Palette. It creates a yaml file which you can draw your integration.
@@ -68,6 +76,7 @@ rabbitmqadmin list queues vhost name node messages
 ```
 
 jbang -Dcamel.jbang.version=3.21.0 camel@apache/camel export --fresh  --directory=/home/sgutierr/development/PoC/zain/rest2rabbit/.export && mvn clean package -f ../rest2rabbitroute
+
 
 
 ## Create a Camel Project (OPTIONAL).
