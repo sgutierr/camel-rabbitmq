@@ -33,7 +33,6 @@ rabbitmqadmin --vhost="/" declare binding source="some_exchange" destination_typ
    kind: ConfigMap
    metadata:
      name: camel-configuration
-     namespace: appdev-integration
    data:
      properties.exchange: some_exchange
    ``` 
